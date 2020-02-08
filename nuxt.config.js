@@ -37,8 +37,6 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    // Doc: https://github.com/nuxt-community/stylelint-module
-    '@nuxtjs/stylelint-module',
     '@nuxtjs/vuetify'
   ],
   /*
@@ -49,7 +47,25 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    [
+      'nuxt-i18n',
+      {
+        locales: ['en', 'de'],
+        defaultLocale: 'en',
+        vueI18n: {
+          fallbackLocale: 'en',
+          messages: {
+            en: {
+              greeting: 'Hello world!'
+            },
+            de: {
+              greeting: 'Hallo Welt!'
+            }
+          }
+        }
+      }
+    ]
   ],
   /*
   ** Axios module configuration
@@ -64,7 +80,6 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -74,6 +89,15 @@ export default {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3
+        },
+        light: {
+          primary: colors.indigo.base,
+          secondary: colors.amber.base,
+          accent: colors.blueGrey.base,
+          error: colors.deepOrange.base,
+          warning: colors.pink.base,
+          info: colors.lightBlue.base,
+          success: colors.lightGreen.base
         }
       }
     }
@@ -85,7 +109,7 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   }
 }
