@@ -3279,7 +3279,7 @@ const questions = [
     answers: [
       {
         answerText: 'Amitriptylin',
-        correct: true
+        correct: false
       },
       {
         answerText: 'Bupropion',
@@ -3287,7 +3287,7 @@ const questions = [
       },
       {
         answerText: 'Fluoxetin',
-        correct: false
+        correct: true
       },
       {
         answerText: 'Mirtazapin',
