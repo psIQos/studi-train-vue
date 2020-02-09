@@ -1,4 +1,4 @@
-const questions = require('~/assets/questions')
+import questions from '~/assets/questions'
 
 export const state = () => ({
   questions,
@@ -7,11 +7,15 @@ export const state = () => ({
 })
 
 export const getters = {
-  getCurrentQuestion: state => state.currentQuestion,
-  getCurrentQuestionNumber: state => state.currentQuestionNumber
+  getCurrentQuestion: state => state.currentQuestion ?? {},
+  getCurrentQuestionNumber: state => state.currentQuestionNumber + 1
 }
 
 export const actions = {
+  nuxtServerInit({ commit }) {
+    commit('setCurrentQuestion')
+  },
+
   setCurrentQuestion({ commit }) {
     commit('setCurrentQuestion')
   },
@@ -28,18 +32,18 @@ export const actions = {
 }
 
 export const mutations = {
-  setCurrentQuestion({ state }) {
+  setCurrentQuestion(state) {
     state.currentQuestion = state.questions[state.currentQuestionNumber]
   },
 
-  nextQuestion({ state }) {
+  nextQuestion(state) {
     if (state.currentQuestionNumber === state.questions.length) {
       return
     }
     state.currentQuestionNumber++
   },
 
-  previousQuestion({ state }) {
+  previousQuestion(state) {
     if (state.currentQuestionNumber === 0) {
       return
     }
