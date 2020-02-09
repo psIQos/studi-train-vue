@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       questions,
-      questionNumber: 1,
+      questionNumber: 1
     }
   },
 
@@ -80,7 +80,7 @@ export default {
   },
 
   mounted() {
-    window.addEventListener('keydown', event => {
+    window.addEventListener('keydown', (event) => {
       switch (event.keyCode) {
         case 13:
           this.saveAnswers()
@@ -94,27 +94,27 @@ export default {
         default:
           break
       }
-    });
+    })
   },
 
   methods: {
     evalQuestion() {
-      
+
     },
 
     nextQuestion() {
-      if (this.questionNumber === questions.length) return
+      if (this.questionNumber === questions.length) { return }
       this.questionNumber += 1
     },
 
     prevQuestion() {
-      if (this.questionNumber === 1) return
+      if (this.questionNumber === 1) { return }
       this.questionNumber -= 1
     },
 
     saveAnswers() {
 
     }
-  },
+  }
 }
 </script>
