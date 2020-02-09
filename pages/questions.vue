@@ -26,10 +26,10 @@
               v-for="(answer, index) in question.answers"
               :key="index"
               ref="answers"
-              :label="answer.answerText"
+              :label="`${numberToChar[index]}: ${answer.answerText}`"
               :input-value="answer.correct"
               hide-details
-              @change="saveAnswer({index, value: $event})"
+              @change="saveAnswer({index, value: $event}); saveAnswers()"
             />
           </div>
         </v-card-text>
@@ -60,6 +60,7 @@
         </v-card-actions>
         <v-snackbar
           v-model="snackbar"
+          :timeout="500"
           color="primary"
         >
           {{ correct ? $t('questions.CORRECT') : $t('general.SOMETHING_WENT_WRONG') }}
@@ -85,7 +86,14 @@ export default {
   data() {
     return {
       snackbar: false,
-      correct: null
+      correct: null,
+      numberToChar: {
+        0: 'A',
+        1: 'B',
+        2: 'C',
+        3: 'D',
+        4: 'E'
+      }
     }
   },
 
@@ -124,6 +132,7 @@ export default {
     }),
 
     evalQuestion() {
+      this.correct = null
       if (this.question.answers.find(item => item.correct == null)) {
         this.snackbar = true
         return
