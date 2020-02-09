@@ -109,7 +109,7 @@ export default {
       ],
       miniVariant: false,
       right: true,
-      rightDrawer: false,
+      rightDrawer: false
     }
   },
 
@@ -117,6 +117,6 @@ export default {
     title() {
       return this.$t(`pages.${this.$route.name.split('___')[0].toUpperCase()}`)
     }
-  },
+  }
 }
 </script>
