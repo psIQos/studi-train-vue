@@ -119,7 +119,7 @@ export default {
     window.addEventListener('keydown', (event) => {
       switch (event.keyCode) {
         case 13:
-          this.saveAnswers()
+          this.evalQuestion()
           break
         case 37:
           this.prevQuestion()

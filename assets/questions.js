@@ -1,4 +1,5 @@
-const questions = [
+const questions =
+[
   {
     questionText: 'Entzündungen sind komplexe Gewebsreaktionen, die mit der Freisetzung von Zytokinen, Leukotrienen, Prostaglandinen und Peptiden einhergehen. Die bei der Entzündung beteiligten Prostaglandine werden durch welches der folgenden Enzyme am ehesten aus der Arachidonsäure gebildet?',
     answers: [
