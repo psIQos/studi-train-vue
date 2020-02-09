@@ -25,6 +25,7 @@
             <v-checkbox
               v-for="(answer, index) in question.answers"
               :key="index"
+              ref="answers"
               :label="answer.answerText"
               :input-value="answer.correct"
               hide-details
@@ -37,7 +38,6 @@
             <v-btn
               color="accent"
               class="mr-2"
-              disabled
               @click="evalQuestion"
             >
               {{ $t('questions.EVALUATE') }}
@@ -58,6 +58,19 @@
             </v-btn>
           </v-flex>
         </v-card-actions>
+        <v-snackbar
+          v-model="snackbar"
+          color="primary"
+        >
+          {{ correct ? $t('questions.CORRECT') : $t('general.SOMETHING_WENT_WRONG') }}
+          <v-btn
+            color="secondary"
+            text
+            @click="snackbar = false"
+          >
+            {{ $t('general.CLOSE') }}
+          </v-btn>
+        </v-snackbar>
       </v-card>
     </v-flex>
   </v-layout>
@@ -65,14 +78,14 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// eslint-disable-next-line no-unused-vars
-import questions from '~/assets/questions'
 
 export default {
   name: 'Questions',
 
   data() {
     return {
+      snackbar: false,
+      correct: null
     }
   },
 
@@ -111,7 +124,17 @@ export default {
     }),
 
     evalQuestion() {
-
+      if (this.question.answers.find(item => item.correct == null)) {
+        this.snackbar = true
+        return
+      }
+      if (this.question.answers.find((item, index) => item.correct !== this.$refs.answers[index].inputValue)) {
+        this.correct = false
+        this.snackbar = true
+        return
+      }
+      this.correct = true
+      this.snackbar = true
     }
   }
 }
