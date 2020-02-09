@@ -24,7 +24,7 @@
           <v-btn
             color="primary"
             nuxt
-            to="/inspire"
+            to="/questions"
           >
             Continue
           </v-btn>
