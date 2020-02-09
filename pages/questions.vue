@@ -13,7 +13,7 @@
           <span>{{ $t('questions.QUESTION') }} {{ questionNumber }}</span>
           <v-btn
             icon
-            :disabled="questionNumber === questions.length"
+            :disabled="questionNumber === questionsLength"
             @click="nextQuestion"
           >
             <v-icon>mdi-chevron-right</v-icon>
@@ -26,7 +26,9 @@
               v-for="(answer, index) in question.answers"
               :key="index"
               :label="answer.answerText"
+              :input-value="answer.correct"
               hide-details
+              @change="saveAnswer({index, value: $event})"
             />
           </div>
         </v-card-text>
@@ -35,6 +37,7 @@
             <v-btn
               color="accent"
               class="mr-2"
+              disabled
               @click="evalQuestion"
             >
               {{ $t('questions.EVALUATE') }}
@@ -62,6 +65,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+// eslint-disable-next-line no-unused-vars
 import questions from '~/assets/questions'
 
 export default {
@@ -69,19 +73,15 @@ export default {
 
   data() {
     return {
-      questions
     }
   },
 
   computed: {
     ...mapGetters('questions', {
       question: 'getCurrentQuestion',
-      questionNumber: 'getCurrentQuestionNumber'
+      questionNumber: 'getCurrentQuestionNumber',
+      questionsLength: 'getQuestionsLength'
     })
-
-    // question() {
-    //   return this.questions[this.questionNumber - 1]
-    // }
   },
 
   mounted() {
@@ -105,24 +105,12 @@ export default {
   methods: {
     ...mapActions('questions', {
       nextQuestion: 'nextQuestion',
-      prevQuestion: 'previousQuestion'
+      prevQuestion: 'previousQuestion',
+      saveAnswer: 'saveAnswer',
+      saveAnswers: 'saveAnswers'
     }),
 
     evalQuestion() {
-
-    },
-
-    // nextQuestion() {
-    //   if (this.questionNumber === questions.length) { return }
-    //   this.questionNumber += 1
-    // },
-
-    // prevQuestion() {
-    //   if (this.questionNumber === 1) { return }
-    //   this.questionNumber -= 1
-    // },
-
-    saveAnswers() {
 
     }
   }
