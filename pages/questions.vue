@@ -22,15 +22,22 @@
         <v-card-text>
           {{ question.questionText }}
           <div>
-            <v-checkbox
+            <v-row
               v-for="(answer, index) in question.answers"
               :key="index"
-              ref="answers"
-              :label="`${numberToChar[index]}: ${answer.answerText}`"
-              :input-value="answer.correct"
-              hide-details
-              @change="saveAnswer({index, value: $event}); saveAnswers()"
-            />
+              class="d-flex"
+              align="center"
+            >
+              <span>
+                {{ numberToChar[index] }}:
+              </span>
+              <v-checkbox
+                ref="answers"
+                v-model="answers[index]"
+                :label="answer.answerText"
+                hide-details
+              />
+            </v-row>
           </div>
         </v-card-text>
         <v-card-actions>
@@ -44,6 +51,7 @@
             </v-btn>
             <v-btn
               color="secondary"
+              disabled
               @click="saveAnswers"
             >
               {{ $t('questions.SAVE_ANSWERS') }}
@@ -60,10 +68,10 @@
         </v-card-actions>
         <v-snackbar
           v-model="snackbar"
-          :timeout="500"
+          :timeout="2000"
           color="primary"
         >
-          {{ correct ? $t('questions.CORRECT') : $t('general.SOMETHING_WENT_WRONG') }}
+          {{ message }}
           <v-btn
             color="secondary"
             text
@@ -86,6 +94,7 @@ export default {
   data() {
     return {
       snackbar: false,
+      answers: [],
       correct: null,
       numberToChar: {
         0: 'A',
@@ -93,7 +102,8 @@ export default {
         2: 'C',
         3: 'D',
         4: 'E'
-      }
+      },
+      message: ''
     }
   },
 
@@ -125,25 +135,41 @@ export default {
 
   methods: {
     ...mapActions('questions', {
-      nextQuestion: 'nextQuestion',
-      prevQuestion: 'previousQuestion',
+      nextQuestionState: 'nextQuestion',
+      prevQuestionState: 'previousQuestion',
       saveAnswer: 'saveAnswer',
-      saveAnswers: 'saveAnswers'
+      saveAnswers: 'saveAnswers',
+      setEval: 'setEvaluation'
     }),
 
     evalQuestion() {
       this.correct = null
       if (this.question.answers.find(item => item.correct == null)) {
         this.snackbar = true
+        this.message = this.$t('general.SOMETHING_WENT_WRONG')
         return
       }
-      if (this.question.answers.find((item, index) => item.correct !== this.$refs.answers[index].inputValue)) {
+      if (this.question.answers.find((item, index) => item.correct !== (this.$refs.answers[index].inputValue ?? false))) {
         this.correct = false
+        this.message = this.$t('questions.WRONG')
         this.snackbar = true
+        this.setEval(false)
         return
       }
       this.correct = true
+      this.message = this.$t('questions.CORRECT')
+      this.setEval(true)
       this.snackbar = true
+    },
+
+    nextQuestion() {
+      this.answers = []
+      this.nextQuestionState()
+    },
+
+    prevQuestion() {
+      this.answers = []
+      this.prevQuestionState()
     }
   }
 }
