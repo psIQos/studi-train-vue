@@ -110,7 +110,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: this.$t(`pages.${this.$route.name.split('___')[0].toUpperCase()}`)
     }
   }
 }
