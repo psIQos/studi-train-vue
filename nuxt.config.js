@@ -53,7 +53,7 @@ export default {
       'nuxt-i18n',
       {
         locales: ['en', 'de'],
-        defaultLocale: 'en',
+        defaultLocale: 'de',
         vueI18n: {
           fallbackLocale: 'en',
           messages
