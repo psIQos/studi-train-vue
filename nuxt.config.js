@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+import messages from './i18n'
 
 export default {
   mode: 'universal',
@@ -55,14 +56,7 @@ export default {
         defaultLocale: 'en',
         vueI18n: {
           fallbackLocale: 'en',
-          messages: {
-            en: {
-              greeting: 'Hello world!'
-            },
-            de: {
-              greeting: 'Hallo Welt!'
-            }
-          }
+          messages
         }
       }
     ]
