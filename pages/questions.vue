@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import questions from '~/assets/questions'
 
 export default {
@@ -68,15 +69,19 @@ export default {
 
   data() {
     return {
-      questions,
-      questionNumber: 1
+      questions
     }
   },
 
   computed: {
-    question() {
-      return this.questions[this.questionNumber - 1]
-    }
+    ...mapGetters('questions', {
+      question: 'getCurrentQuestion',
+      questionNumber: 'getCurrentQuestionNumber'
+    })
+
+    // question() {
+    //   return this.questions[this.questionNumber - 1]
+    // }
   },
 
   mounted() {
@@ -98,19 +103,24 @@ export default {
   },
 
   methods: {
+    ...mapActions('questions', {
+      nextQuestion: 'nextQuestion',
+      prevQuestion: 'previousQuestion'
+    }),
+
     evalQuestion() {
 
     },
 
-    nextQuestion() {
-      if (this.questionNumber === questions.length) { return }
-      this.questionNumber += 1
-    },
+    // nextQuestion() {
+    //   if (this.questionNumber === questions.length) { return }
+    //   this.questionNumber += 1
+    // },
 
-    prevQuestion() {
-      if (this.questionNumber === 1) { return }
-      this.questionNumber -= 1
-    },
+    // prevQuestion() {
+    //   if (this.questionNumber === 1) { return }
+    //   this.questionNumber -= 1
+    // },
 
     saveAnswers() {
 
