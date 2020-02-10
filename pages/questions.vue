@@ -140,6 +140,9 @@ export default {
         case 37:
           this.prevQuestion()
           break
+        case 123:
+          this.prevQuestion()
+          break
         case 39:
           this.nextQuestion()
           break
@@ -149,6 +152,16 @@ export default {
         default:
           break
       }
+      // switch (event.key) {
+      //   case 'UIKeyInputRightArrow':
+      //     this.nextQuestion()
+      //     break
+      //   case 'UIKeyInputLeftArrow':
+      //     this.prevQuestion()
+      //     break
+      //   default:
+      //     break
+      // }
     })
   },
 
