@@ -10,7 +10,7 @@ export const state = () => ({
 export const getters = {
   getEvaluation: state => state.evaluation[state.currentQuestionNumber],
   getCurrentQuestion: state => state.currentQuestion,
-  getCurrentQuestionNumber: state => state.currentQuestionNumber + 1,
+  getCurrentQuestionNumber: state => state.currentQuestionNumber,
   getQuestionsLength: state => state.questions.length
 }
 
@@ -20,6 +20,14 @@ export const actions = {
   },
 
   setCurrentQuestion({ commit }) {
+    commit('setCurrentQuestion')
+  },
+
+  setCurrentQuestionNumber({ commit }, index) {
+    if (isNaN(index)) {
+      return
+    }
+    commit('setCurrentQuestionNumber', index)
     commit('setCurrentQuestion')
   },
 
@@ -53,7 +61,7 @@ export const mutations = {
   },
 
   nextQuestion(state) {
-    if (state.currentQuestionNumber === state.questions.length) {
+    if (state.currentQuestionNumber === state.questions.length - 1) {
       return
     }
     state.currentQuestionNumber++
@@ -66,16 +74,23 @@ export const mutations = {
     state.currentQuestionNumber--
   },
 
+  setCurrentQuestionNumber(state, index) {
+    if (index >= state.questions.length || index < 0) {
+      return
+    }
+    state.currentQuestionNumber = index
+  },
+
   saveAnswer(state, { index, value }) {
     state.questions[state.currentQuestionNumber].answers[index].correct = value
   },
 
-  saveAnswers(state, index) {
+  saveAnswers(state, answers) {
     state.questions[state.currentQuestionNumber].answers =
-      state.questions[state.currentQuestionNumber].answers.map(item =>
+      state.questions[state.currentQuestionNumber].answers.map((item, index) =>
         ({
           ...item,
-          correct: item.correct ?? false
+          correct: answers[index] ?? (item.correct ?? false)
         })
       )
   },

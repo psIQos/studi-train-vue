@@ -16,6 +16,13 @@ module.exports = {
   rules: {
     "space-before-function-paren": ["warn", {
       "anonymous": "always", "named": "never", "asyncArrow": "always"
+    }],
+    "vue/max-attributes-per-line": ["warn", {
+      "singleline": 1,
+      "multiline": {
+        "max": 1,
+        "allowFirstLine": false
+      }
     }]
   }
 }

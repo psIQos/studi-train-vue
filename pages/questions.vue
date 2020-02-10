@@ -10,7 +10,20 @@
           >
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
-          <span>{{ $t('questions.QUESTION') }} {{ questionNumber }}</span>
+          <div>
+            <span class="d-inline-block">{{ $t('questions.QUESTION') }}</span>
+            <v-text-field
+              :value="questionNumber.toString()"
+              class="d-inline-block"
+              dense
+              flat
+              solo
+              @input="setCurrentQuestionNumber(parseInt($event) - 1)"
+            />
+          </div>
+          <i>{{ question.answers.find(item => item.correct === null)
+            ? $t('questions.QUESTION_INCOMPLETE') : $t('questions.QUESTION_COMPLETE') }}</i>
+
           <v-btn
             icon
             :disabled="questionNumber === questionsLength"
@@ -51,8 +64,7 @@
             </v-btn>
             <v-btn
               color="secondary"
-              disabled
-              @click="saveAnswers"
+              @click="saveAnswers(answers)"
             >
               {{ $t('questions.SAVE_ANSWERS') }}
             </v-btn>
@@ -110,9 +122,13 @@ export default {
   computed: {
     ...mapGetters('questions', {
       question: 'getCurrentQuestion',
-      questionNumber: 'getCurrentQuestionNumber',
+      getCurrentQuestionNumber: 'getCurrentQuestionNumber',
       questionsLength: 'getQuestionsLength'
-    })
+    }),
+
+    questionNumber() {
+      return this.getCurrentQuestionNumber + 1
+    }
   },
 
   mounted() {
@@ -127,6 +143,9 @@ export default {
         case 39:
           this.nextQuestion()
           break
+        case 32:
+          this.saveAnswers(this.answers)
+          break
         default:
           break
       }
@@ -139,7 +158,8 @@ export default {
       prevQuestionState: 'previousQuestion',
       saveAnswer: 'saveAnswer',
       saveAnswers: 'saveAnswers',
-      setEval: 'setEvaluation'
+      setEval: 'setEvaluation',
+      setCurrentQuestionNumber: 'setCurrentQuestionNumber'
     }),
 
     evalQuestion() {
