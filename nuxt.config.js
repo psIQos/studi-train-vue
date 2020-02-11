@@ -101,6 +101,10 @@ export default {
 
   serverMiddleware: ['redirect-ssl'],
 
+  helmet: {
+    maxAge: 31536000 // 1 year in seconds
+  },
+
   /*
   ** Build configuration
   */
