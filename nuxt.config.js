@@ -99,6 +99,8 @@ export default {
     }
   },
 
+  serverMiddleware: ['redirect-ssl'],
+
   /*
   ** Build configuration
   */
