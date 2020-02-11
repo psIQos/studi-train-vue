@@ -102,7 +102,11 @@ export default {
   serverMiddleware: ['redirect-ssl'],
 
   helmet: {
-    maxAge: 31536000 // 1 year in seconds
+    hsts: {
+      maxAge: 31536000, // 1 year in seconds
+      includeSubDomains: true,
+      preload: true
+    }
   },
 
   /*
