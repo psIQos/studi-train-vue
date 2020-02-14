@@ -20,6 +20,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "crypto": "^1.0.1",
     "nuxt": "^2.0.0",
     "nuxt-helmet": "^1.2.2",
     "nuxt-i18n": "^6.5.0",
@@ -27,15 +28,15 @@
     "vuex-persist": "^2.2.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0",
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^6.1.0",
-    "eslint-plugin-nuxt": ">=0.4.2",
-    "eslint-plugin-vue": "^6.1.2",
+    "@nuxtjs/vuetify": "^1.0.0",
     "@vue/test-utils": "^1.0.0-beta.27",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-nuxt": "^0.5.1",
+    "eslint-plugin-vue": "^6.1.2",
     "jest": "^24.1.0",
     "vue-jest": "^4.0.0-0"
   }
