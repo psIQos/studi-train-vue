@@ -1,7 +1,5 @@
-import questions from '~/assets/questions.json'
-
 export const state = () => ({
-  questions,
+  questions: [],
   evaluation: [],
   currentQuestionNumber: 0,
   currentQuestion: {}
@@ -57,6 +55,9 @@ export const actions = {
 
 export const mutations = {
   setCurrentQuestion(state) {
+    if (state.questions.length === 0) {
+      return
+    }
     state.currentQuestion = state.questions[state.currentQuestionNumber]
   },
 

@@ -68,6 +68,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL: process.env.NODE_ENV === 'development' ? 'https://localhost:32111/api'
+      : 'https://studi-train-core-staging.herokuapp.com/api'
   },
   /*
   ** vuetify module configuration
