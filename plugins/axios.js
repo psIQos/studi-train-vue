@@ -7,7 +7,7 @@ export default function ({ $axios, redirect }) {
   })
 
   $axios.onError((error) => {
-    return Promise.resolve(error)
+    return Promise.reject(error)
     // const code = parseInt(error.response && error.response.status)
     // if (code === 401) {
     //   redirect('/400')
