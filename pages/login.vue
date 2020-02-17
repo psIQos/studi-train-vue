@@ -12,7 +12,6 @@
           <v-text-field
             v-model="username"
             outlined
-            filled
             autofocus
             label="Accountname / Email"
             @keydown.enter="$refs.password.focus()"
@@ -27,7 +26,6 @@
             ref="password"
             v-model="password"
             outlined
-            filled
             type="password"
             label="Passwort"
             @keydown.enter="authenticate({username, password})"
@@ -47,7 +45,10 @@
           <v-btn color="secondary">
             Registrieren
           </v-btn>
-          <v-btn color="primary">
+          <v-btn
+            color="primary"
+            @click="authenticate({username, password})"
+          >
             Anmelden
           </v-btn>
         </v-col>
@@ -60,9 +61,11 @@
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'Login',
+
   layout: 'unauthorized',
 
-  name: 'Login',
+  auth: 'guest',
 
   data() {
     return {

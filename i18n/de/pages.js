@@ -1,7 +1,8 @@
 const pages = {
   'QUESTIONS': 'Fragenansicht',
   'INDEX': 'Startseite',
-  'LOGIN': 'Anmeldung'
+  'LOGIN': 'Anmeldung',
+  'undefined': 'Unbekannte Seite'
 }
 
 export default pages
