@@ -1,99 +1,100 @@
 <template>
-  <v-layout>
-    <v-card>
-      <v-card-title class="justify-space-between">
-        <v-btn
-          icon
-          :disabled="questionNumber === 1"
-          @click="prevQuestion"
-        >
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
-        <span class="d-inline-block">{{ $t('questions.QUESTION') }}</span>
-        <div>
-          <v-text-field
-            :value="questionNumber.toString()"
-            class="centered-input"
-            flat
-            dense
-            solo
-            hide-details
-            @input="setCurrentQuestionNumber(parseInt($event) - 1)"
-          />
-        </div>
-        <i>{{ question.answers.find(item => item.correct === null)
-          ? $t('questions.QUESTION_INCOMPLETE') : $t('questions.QUESTION_COMPLETE') }}</i>
-
-        <v-btn
-          icon
-          :disabled="questionNumber === questionsLength"
-          @click="nextQuestion"
-        >
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-card-title>
-      <v-card-text>
-        {{ question.questionText }}
-        <div>
-          <v-row
-            v-for="(answer, index) in question.answers"
-            :key="index"
-            class="d-flex"
-            align="center"
-          >
-            <span>
-              {{ numberToChar[index] }}:
-            </span>
-            <v-checkbox
-              ref="answers"
-              v-model="answers[index]"
-              :label="answer.answerText"
-              hide-details
-            />
-          </v-row>
-        </div>
-      </v-card-text>
-      <v-card-actions>
-        <v-flex>
-          <v-btn
-            color="accent"
-            class="mr-2"
-            @click="evalQuestion"
-          >
-            {{ $t('questions.EVALUATE') }}
-          </v-btn>
-          <v-btn
-            color="secondary"
-            @click="saveAnswers(answers)"
-          >
-            {{ $t('questions.SAVE_ANSWERS') }}
-          </v-btn>
-        </v-flex>
-        <v-flex class="text-right">
-          <v-btn
-            color="primary"
-            @click="nextQuestion"
-          >
-            {{ $t('general.CONTINUE') }}
-          </v-btn>
-        </v-flex>
-      </v-card-actions>
-      <v-snackbar
-        v-model="snackbar"
-        :timeout="2000"
-        color="primary"
+  <v-card
+    v-if="!!question"
+  >
+    <v-card-title
+      class="justify-space-between"
+    >
+      <v-btn
+        icon
+        :disabled="questionNumber === 1"
+        @click="prevQuestion"
       >
-        {{ message }}
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+      <span class="d-inline-block">{{ $t('questions.QUESTION') }}</span>
+      <div>
+        <v-text-field
+          :value="questionNumber.toString()"
+          class="centered-input"
+          flat
+          dense
+          solo
+          hide-details
+          @input="setCurrentQuestionNumber(parseInt($event) - 1)"
+        />
+      </div>
+      <i>{{ question.complete ? $t('questions.QUESTION_INCOMPLETE') : $t('questions.QUESTION_COMPLETE') }}</i>
+
+      <v-btn
+        icon
+        :disabled="questionNumber === questionsLength"
+        @click="nextQuestion"
+      >
+        <v-icon>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-card-title>
+    <v-card-text>
+      {{ question.questionText }}
+      <div>
+        <v-row
+          v-for="(answer, index) in question.answers"
+          :key="index"
+          class="d-flex"
+          align="center"
+        >
+          <span>
+            {{ numberToChar[index] }}:
+          </span>
+          <v-checkbox
+            ref="answers"
+            v-model="answers[index]"
+            :label="answer.answerText"
+            hide-details
+          />
+        </v-row>
+      </div>
+    </v-card-text>
+    <v-card-actions>
+      <v-flex>
+        <v-btn
+          color="accent"
+          class="mr-2"
+          @click="evalQuestion"
+        >
+          {{ $t('questions.EVALUATE') }}
+        </v-btn>
         <v-btn
           color="secondary"
-          text
-          @click="snackbar = false"
+          @click="saveAnswers(answers)"
         >
-          {{ $t('general.CLOSE') }}
+          {{ $t('questions.SAVE_ANSWERS') }}
         </v-btn>
-      </v-snackbar>
-    </v-card>
-  </v-layout>
+      </v-flex>
+      <v-flex class="text-right">
+        <v-btn
+          color="primary"
+          @click="nextQuestion"
+        >
+          {{ $t('general.CONTINUE') }}
+        </v-btn>
+      </v-flex>
+    </v-card-actions>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      color="primary"
+    >
+      {{ message }}
+      <v-btn
+        color="secondary"
+        text
+        @click="snackbar = false"
+      >
+        {{ $t('general.CLOSE') }}
+      </v-btn>
+    </v-snackbar>
+  </v-card>
 </template>
 
 <script>
@@ -131,8 +132,6 @@ export default {
   },
 
   mounted() {
-    const crypto = require('crypto')
-    console.log(crypto.createPrivateKey({ key: '' }))
     window.addEventListener('keydown', (event) => {
       switch (event.keyCode) {
         case 13:

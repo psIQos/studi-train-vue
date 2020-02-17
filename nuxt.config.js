@@ -21,7 +21,7 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: colors.indigo.base },
   /*
   ** Global CSS
   */
@@ -31,7 +31,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/vuex-persist', ssr: false }
+    '~/plugins/axios'
+    // { src: '~/plugins/vuex-persist', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -47,6 +48,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     '@nuxtjs/pwa',
     'nuxt-helmet',
     // Doc: https://github.com/nuxt-community/dotenv-module
@@ -68,7 +70,34 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL: process.env.NODE_ENV === 'development' ? 'https://localhost:32111/api'
+      : 'https://studi-train-core-staging.herokuapp.com/api'
   },
+
+  auth: {
+    localStorage: false,
+    cookie: {
+      options: {
+        expires: 7
+      }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      home: '/'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/users/authenticate', method: 'post', propertyName: false },
+          logout: false,
+          user: false
+          // user: { url: '/users/me', method: 'get', propertyName: false }
+        }
+      }
+    }
+  },
+
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
@@ -89,7 +118,7 @@ export default {
         light: {
           primary: colors.indigo.base,
           secondary: colors.amber.base,
-          accent: colors.blueGrey.base,
+          accent: colors.blueGrey.lighten4,
           error: colors.deepOrange.base,
           warning: colors.pink.base,
           info: colors.lightBlue.base,
@@ -97,6 +126,10 @@ export default {
         }
       }
     }
+  },
+
+  router: {
+    middleware: ['auth']
   },
 
   serverMiddleware: ['redirect-ssl'],

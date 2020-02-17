@@ -1,7 +1,5 @@
-import questions from '~/assets/questions.json'
-
 export const state = () => ({
-  questions,
+  questions: [],
   evaluation: [],
   currentQuestionNumber: 0,
   currentQuestion: {}
@@ -24,9 +22,8 @@ export const actions = {
   },
 
   setCurrentQuestionNumber({ commit }, index) {
-    if (isNaN(index)) {
-      return
-    }
+    if (isNaN(index)) return
+
     commit('setCurrentQuestionNumber', index)
     commit('setCurrentQuestion')
   },
@@ -57,27 +54,26 @@ export const actions = {
 
 export const mutations = {
   setCurrentQuestion(state) {
+    if (state.questions.length === 0) return
+
     state.currentQuestion = state.questions[state.currentQuestionNumber]
   },
 
   nextQuestion(state) {
-    if (state.currentQuestionNumber === state.questions.length - 1) {
-      return
-    }
+    if (state.currentQuestionNumber === state.questions.length - 1) return
+
     state.currentQuestionNumber++
   },
 
   previousQuestion(state) {
-    if (state.currentQuestionNumber === 0) {
-      return
-    }
+    if (state.currentQuestionNumber === 0) return
+
     state.currentQuestionNumber--
   },
 
   setCurrentQuestionNumber(state, index) {
-    if (index >= state.questions.length || index < 0) {
-      return
-    }
+    if (index >= state.questions.length || index < 0) return
+
     state.currentQuestionNumber = index
   },
 
