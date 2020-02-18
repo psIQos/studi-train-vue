@@ -61,6 +61,10 @@ export default {
         vueI18n: {
           fallbackLocale: 'en',
           messages
+        },
+        detectBrowserLanguage: {
+          useCookie: true,
+          alwaysRedirect: true
         }
       }
     ]
@@ -95,7 +99,8 @@ export default {
           // user: { url: '/users/me', method: 'get', propertyName: false }
         }
       }
-    }
+    },
+    plugins: [ '~/plugins/auth.js' ]
   },
 
   /*
