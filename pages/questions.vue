@@ -1,100 +1,100 @@
 <template>
-  <v-layout>
-    <v-flex>
-      <v-card>
-        <v-card-title class="justify-space-between">
-          <v-btn
-            icon
-            :disabled="questionNumber === 1"
-            @click="prevQuestion"
-          >
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-          <div>
-            <span class="d-inline-block">{{ $t('questions.QUESTION') }}</span>
-            <v-text-field
-              :value="questionNumber.toString()"
-              class="d-inline-block"
-              dense
-              flat
-              solo
-              @input="setCurrentQuestionNumber(parseInt($event) - 1)"
-            />
-          </div>
-          <i>{{ question.answers.find(item => item.correct === null)
-            ? $t('questions.QUESTION_INCOMPLETE') : $t('questions.QUESTION_COMPLETE') }}</i>
+  <v-card
+    v-if="!!question"
+  >
+    <v-card-title
+      class="justify-space-between"
+    >
+      <v-btn
+        icon
+        :disabled="questionNumber === 1"
+        @click="prevQuestion"
+      >
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+      <span class="d-inline-block">{{ $t('questions.QUESTION') }}</span>
+      <div>
+        <v-text-field
+          :value="questionNumber.toString()"
+          class="centered-input"
+          flat
+          dense
+          solo
+          hide-details
+          @input="setCurrentQuestionNumber(parseInt($event) - 1)"
+        />
+      </div>
+      <i>{{ question.complete ? $t('questions.QUESTION_INCOMPLETE') : $t('questions.QUESTION_COMPLETE') }}</i>
 
-          <v-btn
-            icon
-            :disabled="questionNumber === questionsLength"
-            @click="nextQuestion"
-          >
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-card-text>
-          {{ question.questionText }}
-          <div>
-            <v-row
-              v-for="(answer, index) in question.answers"
-              :key="index"
-              class="d-flex"
-              align="center"
-            >
-              <span>
-                {{ numberToChar[index] }}:
-              </span>
-              <v-checkbox
-                ref="answers"
-                v-model="answers[index]"
-                :label="answer.answerText"
-                hide-details
-              />
-            </v-row>
-          </div>
-        </v-card-text>
-        <v-card-actions>
-          <v-flex>
-            <v-btn
-              color="accent"
-              class="mr-2"
-              @click="evalQuestion"
-            >
-              {{ $t('questions.EVALUATE') }}
-            </v-btn>
-            <v-btn
-              color="secondary"
-              @click="saveAnswers(answers)"
-            >
-              {{ $t('questions.SAVE_ANSWERS') }}
-            </v-btn>
-          </v-flex>
-          <v-flex class="text-right">
-            <v-btn
-              color="primary"
-              @click="nextQuestion"
-            >
-              {{ $t('general.CONTINUE') }}
-            </v-btn>
-          </v-flex>
-        </v-card-actions>
-        <v-snackbar
-          v-model="snackbar"
-          :timeout="2000"
-          color="primary"
+      <v-btn
+        icon
+        :disabled="questionNumber === questionsLength"
+        @click="nextQuestion"
+      >
+        <v-icon>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-card-title>
+    <v-card-text>
+      {{ question.questionText }}
+      <div>
+        <v-row
+          v-for="(answer, index) in question.answers"
+          :key="index"
+          class="d-flex"
+          align="center"
         >
-          {{ message }}
-          <v-btn
-            color="secondary"
-            text
-            @click="snackbar = false"
-          >
-            {{ $t('general.CLOSE') }}
-          </v-btn>
-        </v-snackbar>
-      </v-card>
-    </v-flex>
-  </v-layout>
+          <span>
+            {{ numberToChar[index] }}:
+          </span>
+          <v-checkbox
+            ref="answers"
+            v-model="answers[index]"
+            :label="answer.answerText"
+            hide-details
+          />
+        </v-row>
+      </div>
+    </v-card-text>
+    <v-card-actions>
+      <v-flex>
+        <v-btn
+          color="accent"
+          class="mr-2"
+          @click="evalQuestion"
+        >
+          {{ $t('questions.EVALUATE') }}
+        </v-btn>
+        <v-btn
+          color="secondary"
+          @click="saveAnswers(answers)"
+        >
+          {{ $t('questions.SAVE_ANSWERS') }}
+        </v-btn>
+      </v-flex>
+      <v-flex class="text-right">
+        <v-btn
+          color="primary"
+          @click="nextQuestion"
+        >
+          {{ $t('general.CONTINUE') }}
+        </v-btn>
+      </v-flex>
+    </v-card-actions>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="2000"
+      color="primary"
+    >
+      {{ message }}
+      <v-btn
+        color="secondary"
+        text
+        @click="snackbar = false"
+      >
+        {{ $t('general.CLOSE') }}
+      </v-btn>
+    </v-snackbar>
+  </v-card>
 </template>
 
 <script>
@@ -140,9 +140,6 @@ export default {
         case 37:
           this.prevQuestion()
           break
-        case 123:
-          this.prevQuestion()
-          break
         case 39:
           this.nextQuestion()
           break
@@ -152,16 +149,6 @@ export default {
         default:
           break
       }
-      // switch (event.key) {
-      //   case 'UIKeyInputRightArrow':
-      //     this.nextQuestion()
-      //     break
-      //   case 'UIKeyInputLeftArrow':
-      //     this.prevQuestion()
-      //     break
-      //   default:
-      //     break
-      // }
     })
   },
 
@@ -207,3 +194,9 @@ export default {
   }
 }
 </script>
+
+<style lang="css" scoped>
+.centered-input >>> input {
+  text-align: center !important;
+}
+</style>

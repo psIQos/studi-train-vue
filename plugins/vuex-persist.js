@@ -5,11 +5,7 @@ export default ({ store }) => {
     new VuexPersistence({
       key: 'vuex',
       storage: window.localStorage,
-      reducer: state => ({ questions: {
-        currentQuestionNumber: state.questions.currentQuestionNumber,
-        currentQuestion: state.questions.currentQuestion,
-        evaluation: state.questions.evaluation }
-      })
+      filter: () => false
     /* your options */
     }).plugin(store)
   })

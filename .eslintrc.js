@@ -23,6 +23,7 @@ module.exports = {
         "max": 1,
         "allowFirstLine": false
       }
-    }]
+    }],
+    "curly": ["error", "multi"]
   }
 }
