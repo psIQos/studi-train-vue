@@ -1,16 +1,14 @@
 export default function ({ $axios, redirect }) {
   $axios.onRequest((config) => {
-    // eslint-disable-next-line no-console
-    console.log('Making request to ' + config.url)
-  }, (error) => {
-    return Promise.reject(error)
+    // code for each request
   })
 
   $axios.onError((error) => {
-    return Promise.reject(error)
-    // const code = parseInt(error.response && error.response.status)
-    // if (code === 401) {
-    //   redirect('/400')
-    // }
+    if (error.config.url === '/users/authenticate')
+      // reject errors on authenticate request to prevent falsely logging in
+      return Promise.reject(error)
+    const code = error.response.status
+    if (code === 401)
+      return Promise.resolve(error)
   })
 }
