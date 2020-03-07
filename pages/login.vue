@@ -43,13 +43,13 @@
           class="d-inline-flex justify-space-between pt-0 pb-3"
         >
           <v-btn color="secondary">
-            Registrieren
+            {{ $t('login.REGISTER') }}
           </v-btn>
           <v-btn
             color="primary"
             @click="authenticate({username, password})"
           >
-            Anmelden
+            {{ $t('login.LOGIN') }}
           </v-btn>
         </v-col>
       </v-row>

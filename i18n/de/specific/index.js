@@ -1,7 +1,9 @@
 import questions from './questions'
+import login from './login'
 
 const specific = {
-  questions
+  questions,
+  login
 }
 
 export default specific
