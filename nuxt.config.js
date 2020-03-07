@@ -1,5 +1,16 @@
+import path from 'path'
+import fs from 'fs'
 import colors from 'vuetify/es5/util/colors'
 import messages from './i18n'
+
+const env = process.env.NODE_ENV
+
+const envPath = path.resolve(process.cwd(), `.env.${env}`)
+const defaultEnvPath = path.resolve(process.cwd(), '.env')
+
+require('dotenv').config({
+  path: fs.existsSync(envPath) ? envPath : defaultEnvPath
+})
 
 export default {
   mode: 'universal',
@@ -74,8 +85,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: process.env.NODE_ENV === 'development' ? 'https://localhost:32111/api'
-      : 'https://studi-train-core-staging.herokuapp.com/api'
+    baseURL: process.env.BASE_URL
   },
 
   auth: {
