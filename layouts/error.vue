@@ -6,7 +6,7 @@
     <h1 v-else>
       {{ otherError }}
     </h1>
-    loaderio-74d83657edf35b54ed77ce4f9932f40c
+    loaderio-bfd58b92eac273ee0ba05979f0454e89
     <NuxtLink to="/">
       Home page
     </NuxtLink>
