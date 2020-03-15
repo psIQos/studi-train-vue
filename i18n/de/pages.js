@@ -1,7 +1,8 @@
 const pages = {
   'QUESTIONS': 'Fragenansicht',
-  'INDEX': 'Startseite',
+  'INDEX': 'Dashboard',
   'LOGIN': 'Anmeldung',
+  'CATEGORIES': 'Fragenübersicht',
   'undefined': 'Unbekannte Seite'
 }
 

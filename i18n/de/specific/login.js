@@ -1,5 +1,6 @@
 const login = {
   LOGIN: 'Anmelden',
+  LOGOUT: 'Abmelden',
   REGISTER: 'Registrieren'
 }
 

@@ -1,5 +1,9 @@
 <template>
-  <v-card>
+  <v-card
+    nuxt
+    to="categories"
+    :ripple="false"
+  >
     <v-card-title>Categories</v-card-title>
     <v-card-text>Textcontent</v-card-text>
     <v-card-actions>Actions</v-card-actions>
