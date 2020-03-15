@@ -1,45 +1,38 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
+  <v-row
+    align="stretch"
+    dense
   >
-    <v-flex
-      xs12
-      sm8
-      md6
+    <v-col
+      md="6"
+      cols="12"
     >
-      <div class="text-center">
-        <logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/questions"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+      <CategoriesOverview class="pa-3" />
+    </v-col>
+    <v-col
+      md="6"
+      cols="12"
+    >
+      <TestOverview />
+    </v-col>
+    <v-col cols="12">
+      <EvaluationOverview />
+    </v-col>
+  </v-row>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import EvaluationOverview from '@/components/evaluationOverview.vue'
+import CategoriesOverview from '~/components/categoriesOverview.vue'
+import TestOverview from '~/components/testOverview.vue'
 
 export default {
+  name: 'Dashboard',
+
   components: {
-    Logo
+    CategoriesOverview,
+    TestOverview,
+    EvaluationOverview
   }
 }
 </script>
