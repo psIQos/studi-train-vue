@@ -22,7 +22,7 @@
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
     "crypto": "^1.0.1",
-    "nuxt": "^2.0.0",
+    "nuxt": "^3.4.3",
     "nuxt-helmet": "^1.2.2",
     "nuxt-i18n": "^6.5.0",
     "redirect-ssl": "^1.4.1",
